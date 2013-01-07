@@ -2,7 +2,7 @@
  * L-system manager
  * ls.js (core and base logic implementation)
  *
- * https://github.com/Amphiluke/jquery-plugins/blob/master/src/l-systems/ls.js
+ * https://github.com/Amphiluke/pure-js/blob/master/src/l-systems/ls.js
  *
  * Copyright (c) 2012-2013 Amphiluke
  *

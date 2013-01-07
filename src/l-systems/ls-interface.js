@@ -2,7 +2,7 @@
  * L-system manager
  * ls-interface.js (user interface)
  *
- * https://github.com/Amphiluke/jquery-plugins/blob/master/src/l-systems/ls-interface.js
+ * https://github.com/Amphiluke/pure-js/blob/master/src/l-systems/ls-interface.js
  *
  * Copyright (c) 2012-2013 Amphiluke
  *

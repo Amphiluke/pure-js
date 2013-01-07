@@ -2,7 +2,7 @@
  * fx-pie-charts.js by Amphiluke, 2013 (c)
  * JavaScript module for pie charts plotting
  *
- * https://github.com/Amphiluke/jquery-plugins/tree/master/src/fx-pie-charts
+ * https://github.com/Amphiluke/pure-js/tree/master/src/fx-pie-charts
  * http://diapeira.1gb.ru/diapeira/pure-js/fx-pie-charts.html
  *
  * The script may work both as a standalone module and as a jQuery plugin. It automatically detects whether
@@ -181,7 +181,7 @@ vml: {
 		createCanvas: function () {
 			var inst = this,
 				canvas = doc.createElement("fxpc:group");
-			inst.attr(canvas, { coordsize: inst.chartWidth + " " + inst.chartHeight});
+			inst.attr(canvas, { coordsize: inst.chartWidth + " " + inst.chartHeight });
 			return canvas;
 		},
 		addHandlers:function (handlers) {
