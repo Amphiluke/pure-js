@@ -128,14 +128,18 @@ svg: {
 				startAngle = 0,
 				colorCount = inst.colors.length,
 				pathPiece = "M " + rx + " " + ry + " L ",
+				arcPiece = rx + " " + ry + " 0 0 0 ", // large-arc-flag is always 0 (see arc construction below)
 				path, d;
 			for (var i = 0, len = inst.angles.length; i < len; i++) {
 				path = inst.svg.appendChild(doc.createElementNS(SVG_NS, "path"));
 				d = pathPiece + (rx - rx * Math.sin(startAngle * DEG2RAD)) + " " +
 					(ry - ry * Math.cos(startAngle * DEG2RAD));
-				startAngle += inst.angles[i];
-				d += " A " + rx + " " + ry + " 0 " + ((inst.angles[i] > 180) ? "1" : "0") + " 0 " +
-					(rx - rx * Math.sin(startAngle * DEG2RAD)) + " " +
+				// Construct the arc from two half-arcs to get rid of issues with full angle (360 deg). Fixes issue #1
+				startAngle += inst.angles[i] * 0.5;
+				d += " A " + arcPiece + (rx - rx * Math.sin(startAngle * DEG2RAD)) + " " +
+					(ry - ry * Math.cos(startAngle * DEG2RAD)) + " ";
+				startAngle += inst.angles[i] * 0.5;
+				d += arcPiece + (rx - rx * Math.sin(startAngle * DEG2RAD)) + " " +
 					(ry - ry * Math.cos(startAngle * DEG2RAD)) + " Z";
 				inst.attr(path, {
 					fill: inst.colors[i % colorCount],
