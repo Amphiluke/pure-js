@@ -81,10 +81,10 @@ svg: {
 	},
 	Chart: function (params) {
 		var inst = this;
-		inst.container = (typeof params.container == "string") ? doc.getElementById(params.container) : params.container,
-		inst.chartWidth = params.width || inst.container.clientWidth,
-		inst.chartHeight = params.height || inst.container.clientHeight,
-		inst.colors = params.colors || DEF_COLORS,
+		inst.container = (typeof params.container == "string") ? doc.getElementById(params.container) : params.container;
+		inst.chartWidth = params.width || inst.container.clientWidth;
+		inst.chartHeight = params.height || inst.container.clientHeight;
+		inst.colors = params.colors || DEF_COLORS;
 		inst.angles = inst.getAngles(params.data || inst.container.getAttribute("data-fx-chart").split(/\s*,\s*/));
 		inst.svg = inst.createCanvas();
 		inst.plot(params.outline);
@@ -168,11 +168,11 @@ vml: {
 	},
 	Chart: function (params) {
 		var inst = this;
-		inst.container = (typeof params.container == "string") ? doc.getElementById(params.container) : params.container,
-		inst.chartWidth = params.width || inst.container.clientWidth,
-		inst.chartHeight = params.height || inst.container.clientHeight,
-		inst.colors = params.colors || DEF_COLORS,
-		inst.angles = inst.getAngles(params.data || inst.container.getAttribute("data-fx-chart").split(/\s*,\s*/)),
+		inst.container = (typeof params.container == "string") ? doc.getElementById(params.container) : params.container;
+		inst.chartWidth = params.width || inst.container.clientWidth;
+		inst.chartHeight = params.height || inst.container.clientHeight;
+		inst.colors = params.colors || DEF_COLORS;
+		inst.angles = inst.getAngles(params.data || inst.container.getAttribute("data-fx-chart").split(/\s*,\s*/));
 		inst.group = inst.createCanvas();
 		inst.setStyles(inst.group);
 		inst.plot(params.outline);
