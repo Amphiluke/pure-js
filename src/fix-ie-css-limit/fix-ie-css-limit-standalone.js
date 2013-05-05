@@ -13,7 +13,7 @@
 
 (function () {
 
-    if (document.styleSheets.length < 31) return;
+    if (document.styleSheets.length < (window.cssFixCountIE || 31)) return;
 
     var links,
         paths = [],
