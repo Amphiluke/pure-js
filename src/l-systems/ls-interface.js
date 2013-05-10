@@ -37,10 +37,10 @@ var dom = {
 
 	on: function (type, element, listener, delegatee) {
 		if (delegatee) {
-			if (typeof delegatee == "string") {
+			if (typeof delegatee === "string") {
 				delegatee = this.$(delegatee);
 			}
-			if (typeof element == "string") {
+			if (typeof element === "string") {
 				element = this.findAll(element, delegatee);
 			}
 			delegatee.addEventListener(type, function (e) {
@@ -49,7 +49,7 @@ var dom = {
 				}
 			}, false);
 		} else {
-			if (typeof element == "string") {
+			if (typeof element === "string") {
 				element = this.$(element);
 			}
 			element.addEventListener(type, listener, false);
@@ -79,7 +79,8 @@ lsUI = {
 		this.collectionButtons = {
 			create: $("#ls-collection-create"),
 			del: $("#ls-collection-delete"),
-			store: $("#ls-collection-store")
+			store: $("#ls-collection-store"),
+			purge: $("#ls-collection-purge")
 		};
 		this.canvas = $("#ls-canvas");
 	}
@@ -87,10 +88,11 @@ lsUI = {
 
 collection = {
 	init: function () {
-		if (!localStorage.lsCollections) return;
-		this.bank = JSON.parse(localStorage.lsCollections);
-		this.listCollections("bundled"); // the bundled collection is created within ls-collection.js
-		this.addHandlers();
+		if (localStorage.lsCollections) {
+			this.bank = JSON.parse(localStorage.lsCollections);
+			this.listCollections("bundled"); // the bundled collection is created within ls-collection.js
+			this.addHandlers();
+		}
 	},
 
 	listCollections: function (active) {
@@ -101,41 +103,54 @@ collection = {
 	},
 
 	listLSystems: function () {
-		var name = this.current = lsUI.collections.value;
-		lsUI.collectionButtons.del.disabled = lsUI.collectionButtons.store.disabled = (name == "bundled");
+		var name = this.current = lsUI.collections.value,
+		collectBtns = lsUI.collectionButtons;
+		collectBtns.del.disabled = collectBtns.store.disabled = collectBtns.purge.disabled = (name === "bundled");
 		form.fillSelect(lsUI.collectionList, Object.keys(this.bank[name]));
 	},
 
 	addLSystem: function () {
+		var name;
 		assert(this.current != "bundled", "Unable to add new L-systems to the bundled collection");
-		var name = window.prompt("Specify a new L-system name", "");
-		if (!name) return;
-		assert(!this.bank[this.current].hasOwnProperty(name), "L-system with the same name already exists");
-		this.bank[this.current][name] = form.collectParams(true);
-		localStorage.lsCollections = JSON.stringify(this.bank);
+		name = window.prompt("Specify a new L-system name", "");
+		if (name) {
+			assert(!this.bank[this.current].hasOwnProperty(name), "L-system with the same name already exists");
+			this.bank[this.current][name] = form.collectParams(true);
+			this.updateStorage();
+			this.listLSystems();
+		}
+	},
+
+	delLSystem: function () {
+		assert(this.current != "bundled", "Unable to remove L-systems from the bundled collection");
+		delete this.bank[this.current][lsUI.collectionList.value];
+		this.updateStorage();
 		this.listLSystems();
 	},
 
 	create: function () {
 		var name = window.prompt("Specify a new collection name", "");
-		if (!name) return;
-		assert(!this.bank.hasOwnProperty(name), "Collection with the same name already exists");
-		this.bank[name] = {};
-		localStorage.lsCollections = JSON.stringify(this.bank);
-		this.listCollections(name);
+		if (name) {
+			assert(!this.bank.hasOwnProperty(name), "Collection with the same name already exists");
+			this.bank[name] = {};
+			this.updateStorage();
+			this.listCollections(name);
+		}
 	},
 
 	del: function () {
 		assert(this.current != "bundled", "Unable to delete the bundled collection");
 		delete this.bank[this.current];
-		localStorage.lsCollections = JSON.stringify(this.bank);
+		this.updateStorage();
 		this.listCollections("bundled");
 	},
 
 	addHandlers: function () {
 		var c = this,
 			setLS = function (e) {
-				if (e.type == "keyup" && e.keyCode != 13) return;
+				if (e.type === "keyup" && e.keyCode !== 13) {
+					return;
+				}
 				form.fillParams(c.bank[c.current][this.value]);
 				if (e.ctrlKey) {
 					form.plotLSystem();
@@ -143,10 +158,15 @@ collection = {
 			};
 		dom.on("dblclick", lsUI.collectionList, setLS);
 		dom.on("keyup", lsUI.collectionList, setLS);
-		dom.on("change", lsUI.collections, function () { c.listLSystems(); });
-		dom.on("click", lsUI.collectionButtons.create, function () { c.create(); });
-		dom.on("click", lsUI.collectionButtons.del, function () { c.del(); });
-		dom.on("click", lsUI.collectionButtons.store, function () { c.addLSystem(); });
+		dom.on("change", lsUI.collections, c.listLSystems.bind(c));
+		dom.on("click", lsUI.collectionButtons.create, c.create.bind(c));
+		dom.on("click", lsUI.collectionButtons.del, c.del.bind(c));
+		dom.on("click", lsUI.collectionButtons.store, c.addLSystem.bind(c));
+		dom.on("click", lsUI.collectionButtons.purge, c.delLSystem.bind(c));
+	},
+
+	updateStorage: function () {
+		localStorage.lsCollections = JSON.stringify(this.bank);
 	}
 },
 
@@ -168,7 +188,7 @@ rules = {
 				}
 			},
 			used: function (letter) {
-				return (vacantLetters.indexOf(letter) == -1);
+				return (vacantLetters.indexOf(letter) === -1);
 			},
 			swap: function (from, to) {
 				assert(this.used(from) && !this.used(to), "Illegal parameters passed during attempt to swap rules");
@@ -220,13 +240,18 @@ rules = {
 	},
 
 	add: function (letter) {
-		if (this.letters.length < 1) return;
+		var lis, li, label, input;
+		if (this.letters.length < 1) {
+			return;
+		}
 		letter = this.letters.get(letter);
-		if (!letter) return;
-		var lis = dom.findAll("li", lsUI.rulesList),
-			li = dom.frag.appendChild(lis[lis.length - 2].cloneNode(true)),
-			label = dom.find("label", li),
-			input = lsUI.rules[letter] = dom.find("input", li);
+		if (!letter) {
+			return;
+		}
+		lis = dom.findAll("li", lsUI.rulesList),
+		li = dom.frag.appendChild(lis[lis.length - 2].cloneNode(true)),
+		label = dom.find("label", li),
+		input = lsUI.rules[letter] = dom.find("input", li);
 		label.textContent = letter;
 		label.className = label.htmlFor = input.id = "ls-rule-" + letter;
 		this.setDisabled(letter, true);
@@ -246,11 +271,12 @@ rules = {
 
 	del: function (letter) {
 		var target = lsUI.rules[letter];
-		if (!target || /[FB]/.test(letter)) return;
-		this.letters.put(letter);
-		target.parentNode.parentNode.removeChild(target.parentNode);
-		delete lsUI.rules[letter];
-		this.setDisabled(letter, false);
+		if (target && !/[FB]/.test(letter)) {
+			this.letters.put(letter);
+			target.parentNode.parentNode.removeChild(target.parentNode);
+			delete lsUI.rules[letter];
+			this.setDisabled(letter, false);
+		}
 	},
 
 	fill: function (data) {
@@ -294,20 +320,22 @@ rules = {
 			}
 		}, lsUI.rulesList);
 		dom.on("click", "li", function () {
-			if (!inst.popupOwner) return;
-			if (this.className == "ls-rule-del") {
-				inst.del(inst.popupOwner.textContent);
-			} else if (!inst.isDisabled(this.textContent)) {
-				inst.replace(inst.popupOwner.textContent, this.textContent);
+			if (inst.popupOwner) {
+				if (this.className === "ls-rule-del") {
+					inst.del(inst.popupOwner.textContent);
+				} else if (!inst.isDisabled(this.textContent)) {
+					inst.replace(inst.popupOwner.textContent, this.textContent);
+				}
+				inst.hidePopup();
 			}
-			inst.hidePopup();
 		}, inst.popup);
 	}
 },
 
 form = {
 	fillSelect: function (select, options) {
-		var frag = dom.frag, option;
+		var frag = dom.frag,
+			option;
 		options.forEach(function (name) {
 			option = frag.appendChild(document.createElement("option"));
 			option.text = option.value = name;
@@ -329,13 +357,14 @@ form = {
 	},
 
 	fillParams: function (params) {
-		if (!params) return;
-		lsUI.axiom.value = params.axiom;
-		lsUI.alpha.value = params.alpha;
-		lsUI.theta.value = params.theta;
-		lsUI.step.value = params.step;
-		lsUI.iterCount.value = params.iterCount;
-		rules.fill(params.rules);
+		if (params) {
+			lsUI.axiom.value = params.axiom;
+			lsUI.alpha.value = params.alpha;
+			lsUI.theta.value = params.theta;
+			lsUI.step.value = params.step;
+			lsUI.iterCount.value = params.iterCount;
+			rules.fill(params.rules);
+		}
 	},
 
 	plotLSystem: function (params) {
@@ -374,7 +403,8 @@ form = {
 	},
 
 	addPatternHandler: function () {
-		var img, ctx, url = window.URL || window.webkitURL || window;
+		var url = window.URL || window.webkitURL || window,
+			img, ctx;
 		if (!url.createObjectURL || !url.revokeObjectURL) {
 			dom.$("#ls-pattern").disabled = true;
 			return;
@@ -413,22 +443,17 @@ form = {
 	},
 
 	addHandlers: function () {
-		var f = this;
-		f.addPlotHandler();
-		f.addPanelHandlers();
-		f.addPatternHandler();
-		f.addExportHandler();
-		dom.on("load", window, function () { f.checkQuery(); });
+		this.addPlotHandler();
+		this.addPanelHandlers();
+		this.addPatternHandler();
+		this.addExportHandler();
+		dom.on("load", window, this.checkQuery.bind(this));
 	}
 };
 
-function initLSInterface() {
-	lsUI.cacheElements();
-	collection.init();
-	form.addHandlers();
-	rules.addHandlers();
-}
-
-dom.on("DOMContentLoaded", document, initLSInterface);
+lsUI.cacheElements();
+collection.init();
+form.addHandlers();
+rules.addHandlers();
 
 })();

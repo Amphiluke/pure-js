@@ -128,7 +128,7 @@ function setAxiom(value) {
 function addRules(value) {
 	var productions = Object(value);
 	Object.keys(productions).forEach(function (key) {
-		if (key.length == 1 && validateRule(key)) {
+		if (key.length === 1 && validateRule(key)) {
 			rules[key] = productions[key];
 		}
 	});

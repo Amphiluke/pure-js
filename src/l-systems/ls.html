@@ -4,12 +4,6 @@
 	<meta charset="UTF-8" />
 	<title>L-systems</title>
 	<link rel="stylesheet" href="ls-interface.css" type="text/css" />
-	<script src="ls.js"></script>
-	<script src="ls-collection.js"></script>
-	<script src="ls-interface.js"></script>
-	<!--[if lte IE 9]>
-	<script src="remedy.js"></script>
-	<![endif]-->
 </head>
 <body>
 
@@ -30,12 +24,14 @@
 					<option value="dragon">Dragon</option>
 				</select>
 			</p>
+			<p class="ls-description"><label for="ls-collection-list">Double click (or press Enter) to select L-system. Hold Ctrl key to plot</label></p>
 			<fieldset class="ls-collection-mng collapsed-fieldset">
 				<legend>Manage collections</legend>
 				<ul class="ls-collection-mng-list">
 					<li><input type="button" id="ls-collection-create" value="Create collection…" /></li>
 					<li><input type="button" id="ls-collection-delete" value="Delete collection" /></li>
 					<li><input type="button" id="ls-collection-store" value="Add to collection…" title="Add the currently plotted L-system to active collection" /></li>
+					<li><input type="button" id="ls-collection-purge" value="Remove from collection" /></li>
 				</ul>
 			</fieldset>
 		</fieldset>
@@ -91,6 +87,13 @@
 		</fieldset>
 	</div>
 </form>
+
+<script src="ls.js"></script>
+<script src="ls-collection.js"></script>
+<script src="ls-interface.js"></script>
+<!--[if lte IE 9]>
+<script src="remedy.js"></script>
+<![endif]-->
 
 </body>
 </html>

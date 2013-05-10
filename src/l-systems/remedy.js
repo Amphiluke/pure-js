@@ -4,7 +4,9 @@
 
 /* DOMTokenList emulation for IE 9 */
 
-if ("DOMTokenList" in window) return;
+if ("DOMTokenList" in window) {
+	return;
+}
 
 function DOMTokenList(el, prop) {
 	Object.defineProperties(this, {
@@ -33,7 +35,7 @@ Object.defineProperties(DOMTokenList.prototype, {
 	add: {
 		value: function (token) {
 			var tokenList = this.tokenList.slice(0);
-			if (tokenList.indexOf(token) == -1) {
+			if (tokenList.indexOf(token) === -1) {
 				tokenList.push(token);
 				this.el[this.prop] = tokenList.join(" ");
 			}
@@ -62,9 +64,10 @@ Object.defineProperties(DOMTokenList.prototype, {
 		value: function (token) {
 			var tokenList = this.tokenList.slice(0),
 				index = tokenList.indexOf(token);
-			if (index == -1) return;
-			tokenList.splice(index, 1);
-			this.el[this.prop] = tokenList.join(" ").trim();
+			if (index !== -1) {
+				tokenList.splice(index, 1);
+				this.el[this.prop] = tokenList.join(" ").trim();
+			}
 		},
 		writable: true,
 		enumerable: true,
