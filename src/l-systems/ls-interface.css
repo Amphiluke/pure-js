@@ -167,3 +167,17 @@ fieldset.collapsed-fieldset > legend {
 fieldset.collapsed-fieldset > legend:after {
 	content:" ▼";
 }
+
+.ls-clear-pattern {
+	color:#c00;
+	cursor:pointer;
+	float:right;
+	font-weight:bold;
+}
+
+.ls-details-links {
+	clear:both;
+	font-size:11px;
+	padding-top:1em;
+	text-align:right;
+}

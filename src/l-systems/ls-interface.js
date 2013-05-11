@@ -404,9 +404,10 @@ form = {
 
 	addPatternHandler: function () {
 		var url = window.URL || window.webkitURL || window,
+			patternField = dom.$("#ls-pattern"),
 			img, ctx;
 		if (!url.createObjectURL || !url.revokeObjectURL) {
-			dom.$("#ls-pattern").disabled = true;
+			patternField.disabled = true;
 			return;
 		}
 		img = document.createElement("img");
@@ -415,8 +416,12 @@ form = {
 			form.pattern = ctx.createPattern(img, "repeat");
 			url.revokeObjectURL(this.src);
 		});
-		dom.on("change", "#ls-pattern", function () {
+		dom.on("change", patternField, function () {
 			img.src = url.createObjectURL(this.files[0]);
+		});
+		dom.on("click", ".ls-clear-pattern", function () {
+			form.pattern = null;
+			patternField.value = "";
 		});
 	},
 
