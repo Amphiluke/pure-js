@@ -26,7 +26,7 @@ var axiom = "",
 	ls = Object.create(Object.prototype, {
 		axiom: {
 			get: function () { return axiom; },
-			set: function (value) { setAxiom(value); },
+			set: setAxiom,
 			enumerable: true,
 			configurable: true
 		},
@@ -136,8 +136,9 @@ function addRules(value) {
 }
 
 function genLSCode() {
-	var code = axiom;
-	for (var i = 0; i < ls.iterCount; i++) {
+	var code = axiom,
+		i = 0;
+	for (; i < ls.iterCount; i++) {
 		code = code.split("").map(function (symbol) {
 			// in fact, control characters "+", "-", "[", "]" are not replaced
 			// due to non-configurable properties of the same name in the rules object
@@ -217,7 +218,7 @@ function draw(canvas) {
 	pos.a = -ls.alpha;
 	stack.length = 0; // clear stack JIC
 
-	// draw per se
+	// drawing per se
 	c.clearRect(0, 0, canvas.width, canvas.height);
 	c.fillRect(0, 0, canvas.width, canvas.height);
 	c.beginPath();
