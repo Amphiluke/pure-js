@@ -1,0 +1,23 @@
+#slica-frame {
+	cursor:move;
+	fill:blue;
+	fill-opacity:0.1;
+	stroke:blue;
+	stroke-opacity:0.1;
+	stroke-width:10;
+}
+#slica-ellipse {
+	fill:none;
+	stroke:red;
+	stroke-width:1;
+}
+
+#slica-surface-line,
+#slica-tangent-left, #slica-tangent-right {
+	stroke:green;
+	stroke-width:1;
+}
+#slica-surface-start, #slica-surface-end {
+	cursor:n-resize;
+	fill:green;
+}

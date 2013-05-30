@@ -1,0 +1,143 @@
+body {
+	font:normal 14px/1.2 Arial,sans-serif;
+}
+
+
+.ctrl-pnl {
+	background:#ededed url(data:image/gif;base64,R0lGODlhAgABAIAAAISEhPr6+iH5BAAAAAAALAAAAAACAAEAAAICRAoAOw==) 38px 0 repeat-y;
+	border:1px solid #848484;
+	border-right:none;
+	-moz-border-radius-bottomleft:10px;
+	-moz-border-radius-topleft:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-webkit-border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
+	border-top-left-radius:10px;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	color:#333;
+	float:left;
+	min-height:300px;
+	padding:10px 15px 10px 50px;
+	position:relative;
+	width:25%;
+}
+.ctrl-pnl-tabs {
+	top:10px;
+	left:5px;
+	margin:0;
+	padding:0;
+	position:absolute;
+	-o-transform:rotate(270deg) translateX(-100%);
+	-o-transform-origin:0 0;
+	-ms-transform:rotate(270deg) translateX(-100%);
+	-ms-transform-origin:0 0;
+	-moz-transform:rotate(270deg) translateX(-100%);
+	-moz-transform-origin:0 0;
+	-webkit-transform:rotate(270deg) translateX(-100%);
+	-webkit-transform-origin:0 0;
+	transform:rotate(270deg) translateX(-100%);
+	transform-origin:0 0;
+}
+.ctrl-pnl-tabs li {
+	float:right;
+	margin-left:3px;
+	list-style:none;
+}
+.ctrl-pnl-tabs a {
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:14px;
+	color:#333;
+	display:block;
+	padding:5px 10px;
+	text-decoration:none;
+}
+.ctrl-pnl-tabs a:hover, .ctrl-pnl-tabs a.active {
+	-moz-box-shadow:0 1px 4px 0 #aaa inset, 0 -1px 4px 0 #aaa inset;
+	-webkit-box-shadow:0 1px 4px 0 #aaa inset, 0 -1px 4px 0 #aaa inset;
+	box-shadow:0 1px 4px 0 #aaa inset, 0 -1px 4px 0 #aaa inset;
+}
+.ctrl-pnl-tabsheet {
+	display:none;
+}
+.ctrl-pnl-tabsheet.active {
+	display:block;
+}
+.ctrl-pnl-tabsheet h2 {
+	margin-top:0;
+}
+.ctrl-pnl-field-list {
+	margin:0;
+}
+.ctrl-pnl-field-list dd {
+	margin:0 0 0.5em;
+}
+#ctrl-pnl-colors dd {
+	position:relative;
+}
+#ctrl-pnl-colors dd:after {
+	background:inherit;
+	content:"";
+	display:block;
+	height:14px;
+	position:absolute;
+	right:3px;
+	top:3px;
+	width:14px;
+}
+.ctrl-pnl-tabsheet label, .ctrl-pnl-descr {
+	font-size:0.85em;
+}
+.ctrl-pnl-tabsheet input[type="text"], .ctrl-pnl-tabsheet input[type="file"],
+.ctrl-pnl-tabsheet textarea, .ctrl-pnl-tabsheet select {
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	display:block;
+	width:100%;
+}
+.ctrl-pnl-tabsheet input[type="text"], .ctrl-pnl-tabsheet textarea, .ctrl-pnl-tabsheet select {
+	border:1px solid #848484;
+}
+#picture-fallback, label[for="picture-fallback"],
+.fallback #picture, .fallback label[for="picture"] {
+	display:none;
+}
+.fallback #picture-fallback, .fallback label[for="picture-fallback"] {
+	display:block;
+}
+.ctrl-pnl-tabsheet input[readonly] {
+	background:none;
+	border:none;
+}
+.ctrl-pnl-ico {
+	float:right;
+	font-size:40px;
+	line-height:0.75;
+}
+.notice {
+	color:#d00;
+	cursor:help;
+}
+
+.slica-workspace {
+	background:#ededed;
+	border:1px solid #848484;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	box-sizing:border-box;
+	float:left;
+	min-height:300px;
+	overflow:auto;
+	padding:10px;
+	width:75%;
+}
+.slica-workspace, .slica-workspace * {
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+}

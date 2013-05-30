@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="main.css"/>
+	<link rel="stylesheet" href="slica.css"/>
+</head>
+<body>
+
+<div class="wrapper">
+
+<form action="#" class="ctrl-pnl" id="ctrl-pnl">
+	<ul class="ctrl-pnl-tabs">
+		<li><a href="#control" class="active">Control</a></li>
+		<li><a href="#report" id="report-tab">Report</a></li>
+		<li><a href="#settings">Settings</a></li>
+	</ul>
+	<div id="control" class="ctrl-pnl-tabsheet active">
+		<h2>Control</h2>
+		<dl class="ctrl-pnl-field-list">
+			<dt>
+				<label for="picture">1. Select a photo to work with</label>
+				<label for="picture-fallback">1. Provide a photo to work with <span class="notice" title="The browser you use lacks the support of Blob URLs. Please type file address manually">*</span></label>
+			</dt>
+			<dd>
+				<input type="file" id="picture" size="12" accept="image/jpeg,image/png,image/svg+xml" />
+				<input type="text" id="picture-fallback" />
+			</dd>
+			<dt class="ctrl-pnl-descr"><span class="ctrl-pnl-ico">☞</span>2. Then move and resize the ellipse to fit a droplet shape</dt>
+			<dd></dd>
+			<dt class="ctrl-pnl-descr">3. Move the line (use circular-shaped markers as handles) and superimpose it on the surface horizon</dt>
+			<dd></dd>
+			<dt class="ctrl-pnl-descr">4. Finally press "Calculate" to get a result</dt>
+			<dd><p><input type="submit" value="Calculate" /></p></dd>
+		</dl>
+	</div>
+	<div id="report" class="ctrl-pnl-tabsheet">
+		<h2>Report</h2>
+		<dl class="ctrl-pnl-field-list">
+			<dt><label for="left-angle">Left contact angle</label></dt>
+			<dd><input type="text" id="left-angle" value="—" readonly /></dd>
+			<dt><label for="right-angle">Right contact angle</label></dt>
+			<dd><input type="text" id="right-angle" value="—" readonly /></dd>
+		</dl>
+	</div>
+	<div id="settings" class="ctrl-pnl-tabsheet">
+		<h2>Settings</h2>
+		<fieldset>
+			<legend>Colors</legend>
+			<p class="ctrl-pnl-descr">Type hexadecimal color code,<br />e.g. <code>#00F</code> or <code>#008000</code></p>
+			<dl class="ctrl-pnl-field-list" id="ctrl-pnl-colors">
+				<dt><label for="ellipse-clr">Ellipse</label></dt>
+				<dd><input type="text" id="ellipse-clr" pattern="#(?:[0-9a-fA-F]{3}){1,2}" value="#F00" data-target="#slica-ellipse" /></dd>
+				<dt><label for="surface-clr">Surface</label></dt>
+				<dd><input type="text" id="surface-clr" pattern="#(?:[0-9a-fA-F]{3}){1,2}" value="#008000" data-target="#slica-surface-line" /></dd>
+				<dt><label for="tangent-clr">Tangents</label></dt>
+				<dd><input type="text" id="tangent-clr" pattern="#(?:[0-9a-fA-F]{3}){1,2}" value="#008000" data-target="#slica-tangent-left,#slica-tangent-right" /></dd>
+			</dl>
+		</fieldset>
+	</div>
+</form>
+
+<div class="slica-workspace">
+	<svg width="600" height="400" viewBox="0 0 600 400" id="slica-workspace">
+		<image x="0" y="0" width="350px" height="200px" preserveAspectRatio="xMidYMid" xlink:href="droplet.jpg" id="photo"/>
+		<svg x="50" y="50" width="500" height="200" viewBox="0 0 500 200" id="slica-box">
+			<rect x="0" y="0" width="100%" height="100%" id="slica-frame"/>
+			<ellipse cx="50%" cy="50%" rx="50%" ry="50%" id="slica-ellipse"/>
+		</svg>
+		<g id="slica-surface">
+			<line x1="2%" y1="300" x2="98%" y2="300" id="slica-surface-line"/>
+			<circle cx="2%" cy="300" r="5" id="slica-surface-start" data-coord="y1"/>
+			<circle cx="98%" cy="300" r="5" id="slica-surface-end" data-coord="y2"/>
+		</g>
+		<g id="slica-tangents">
+			<line x1="50%" y1="100%" x2="0" y2="0" id="slica-tangent-left"/>
+			<line x1="50%" y1="100%" x2="100%" y2="0" id="slica-tangent-right"/>
+		</g>
+	</svg>
+</div>
+
+</div>
+
+<script src="utils.js"></script>
+<script src="slica.js"></script>
+<script src="control.js"></script>
+
+</body>
+</html>
