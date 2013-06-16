@@ -23,13 +23,69 @@ control.form = {
 	},
 
 	_submit: function (e) {
-		var angles;
 		SLICA.core.adjustTangents();
-		angles = SLICA.core.getContactAngles();
-		$i("left-angle").value = (angles.left * RAD2DEG).toFixed(2) + "°";
-		$i("right-angle").value = (angles.right * RAD2DEG).toFixed(2) + "°";
+		control.report.add(SLICA.core.getContactAngles());
 		control.tabs.activate($i("report-tab"));
 		e.preventDefault();
+	}
+
+};
+
+
+// Report table processing
+// =======================
+
+control.report = {
+
+	init: function () {
+		this.self = $i("report-table");
+		this.tBody = this.self.tBodies[0];
+		this.overallAverage = $i("overallAverage");
+		this.overallRMS = $i("overallRMS");
+		this.statistics = [];
+		$i("statistics").addEventListener("click", this.toggleStatistics.bind(this), false);
+		$i("clear-results").addEventListener("click", this.clear.bind(this), false);
+	},
+
+	add: function (angles) {
+		var left = angles.left * RAD2DEG,
+			right = angles.right * RAD2DEG,
+			average = 0.5 * (left + right),
+			rowHTML =  "<tr><td></td><td>" + left.toFixed(2) + "</td><td>" + right.toFixed(2) + "</td><td>" +
+				average.toFixed(2) + "</td></tr>";
+		if (this.statistics) {
+			this.statistics.push(left, right);
+			this.updateOverall();
+			this.tBody.innerHTML += rowHTML;
+		} else {
+			this.tBody.innerHTML = rowHTML;
+		}
+	},
+
+	updateOverall: function () {
+		var invLen = 1 / this.statistics.length,
+			average = this.statistics.reduce(function (accum, angle) {
+				return accum + angle;
+			}) * invLen,
+			rms = Math.sqrt(this.statistics.reduce(function (accum, angle) {
+				var deviation = angle - average;
+				return accum + deviation * deviation;
+			}, 0) * invLen);
+		this.overallAverage.textContent = average.toFixed(2) + "°";
+		this.overallRMS.textContent = rms.toFixed(2) + "°";
+	},
+
+	clear: function () {
+		if (this.statistics) {
+			this.statistics.length = 0;
+			this.overallAverage.textContent = this.overallRMS.textContent = "?";
+		}
+		this.tBody.innerHTML = "";
+	},
+
+	toggleStatistics: function (e) {
+		this.statistics = (e.target.checked) ? [] : null;
+		this.self.classList.toggle("statistics-off");
 	}
 
 };
@@ -84,6 +140,7 @@ control.picture = {
 			dummyImg = new Image();
 		dummyImg.onload = function () {
 			control.picture.update(this);
+			control.report.clear();
 		};
 		if (url.createObjectURL) {
 			picture.addEventListener("change", function () {
@@ -149,7 +206,7 @@ control.colors = {
 		if (target.checkValidity()) {
 			// this will change background of a preview pseudo-element on the right (see main.css for details)
 			target.parentNode.style.backgroundColor = target.value || target.defaultValue;
-			element = target.dataset.target;
+			element = target.getAttribute("data-target");
 			if (element) {
 				if (!_ctrlClrUpd[element]) {
 					_ctrlClrUpd[element] = getElementArray(element); // memoize element references
@@ -165,6 +222,7 @@ control.colors = {
 
 
 control.form.init();
+control.report.init();
 control.tabs.init();
 control.picture.init();
 control.colors.init();

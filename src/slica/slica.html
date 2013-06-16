@@ -24,24 +24,46 @@
 			</dt>
 			<dd>
 				<input type="file" id="picture" size="12" accept="image/jpeg,image/png,image/svg+xml" />
-				<input type="text" id="picture-fallback" />
+				<input type="text" id="picture-fallback" value="droplet.jpg" />
 			</dd>
 			<dt class="ctrl-pnl-descr"><span class="ctrl-pnl-ico">☞</span>2. Then move and resize the ellipse to fit a droplet shape</dt>
 			<dd></dd>
 			<dt class="ctrl-pnl-descr">3. Move the line (use circular-shaped markers as handles) and superimpose it on the surface horizon</dt>
 			<dd></dd>
 			<dt class="ctrl-pnl-descr">4. Finally press "Calculate" to get a result</dt>
-			<dd><p><input type="submit" value="Calculate" /></p></dd>
+			<dd></dd>
 		</dl>
 	</div>
 	<div id="report" class="ctrl-pnl-tabsheet">
 		<h2>Report</h2>
-		<dl class="ctrl-pnl-field-list">
-			<dt><label for="left-angle">Left contact angle</label></dt>
-			<dd><input type="text" id="left-angle" value="—" readonly /></dd>
-			<dt><label for="right-angle">Right contact angle</label></dt>
-			<dd><input type="text" id="right-angle" value="—" readonly /></dd>
-		</dl>
+		<p>
+			<span title="Clear results" id="clear-results">✘</span>
+			<label><input type="checkbox" id="statistics" autocomplete="off" checked /> Collect statistics</label>
+		</p>
+		<table id="report-table">
+			<thead>
+				<tr>
+					<th title="Measurement number"><var>i</var></th>
+					<th title="Left contact angle"><var>θ <sup>l</sup><sub>i</sub></var>, °</th>
+					<th title="Right contact angle"><var>θ <sup>r</sup><sub>i</sub></var>, °</th>
+					<th title="Average contact angle"><var class="average">θ</var>, °</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th colspan="4" title="Statistical average contact angle">
+						<var class="average">Θ</var> = <span id="overallAverage">?</span>
+					</th>
+				</tr>
+				<tr>
+					<th colspan="4" title="Root-mean-square deviation">
+						<var>σ</var> = <span id="overallRMS">?</span>
+					</th>
+				</tr>
+			</tfoot>
+			<tbody>
+			</tbody>
+		</table>
 	</div>
 	<div id="settings" class="ctrl-pnl-tabsheet">
 		<h2>Settings</h2>
@@ -58,6 +80,7 @@
 			</dl>
 		</fieldset>
 	</div>
+	<p><input type="submit" value="Calculate" /></p>
 </form>
 
 <div class="slica-workspace">

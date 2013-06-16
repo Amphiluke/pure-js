@@ -18,7 +18,9 @@ body {
 	box-sizing:border-box;
 	color:#333;
 	float:left;
+	max-height:425px;
 	min-height:300px;
+	overflow:auto;
 	padding:10px 15px 10px 50px;
 	position:relative;
 	width:25%;
@@ -120,6 +122,43 @@ body {
 .notice {
 	color:#d00;
 	cursor:help;
+}
+
+#report-table {
+	border-collapse:collapse;
+	width:100%;
+}
+#report-table th, #report-table td {
+	border:1px solid #848484;
+	padding:2px;
+}
+#report-table th {
+	font:bold 14px "Times New Roman",serif;
+}
+#report-table th[title] {
+	cursor:help;
+}
+#report-table tbody {
+	counter-reset:sequence;
+}
+#report-table tbody td:first-child:before {
+	content:counter(sequence);
+	counter-increment:sequence;
+}
+.average {
+	text-decoration:overline;
+}
+#clear-results {
+	color:#a00;
+	cursor:pointer;
+	float:right;
+	font-size:1.2em;
+}
+#statistics {
+	vertical-align:middle;
+}
+.statistics-off tfoot {
+	display:none;
 }
 
 .slica-workspace {
