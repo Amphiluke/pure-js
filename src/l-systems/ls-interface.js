@@ -74,7 +74,7 @@ lsUI = {
 			fg: $("#ls-color"),
 			bg: $("#ls-background")
 		};
-		this.collections = $("#ls-collections"),
+		this.collections = $("#ls-collections");
 		this.collectionList = $("#ls-collection-list");
 		this.collectionButtons = {
 			create: $("#ls-collection-create"),
@@ -83,6 +83,7 @@ lsUI = {
 			purge: $("#ls-collection-purge")
 		};
 		this.canvas = $("#ls-canvas");
+		this.exportLink = $("#ls-export");
 	}
 },
 
@@ -248,9 +249,9 @@ rules = {
 		if (!letter) {
 			return;
 		}
-		lis = dom.findAll("li", lsUI.rulesList),
-		li = dom.frag.appendChild(lis[lis.length - 2].cloneNode(true)),
-		label = dom.find("label", li),
+		lis = dom.findAll("li", lsUI.rulesList);
+		li = dom.frag.appendChild(lis[lis.length - 2].cloneNode(true));
+		label = dom.find("label", li);
 		input = lsUI.rules[letter] = dom.find("input", li);
 		label.textContent = letter;
 		label.className = label.htmlFor = input.id = "ls-rule-" + letter;
@@ -372,6 +373,7 @@ form = {
 		ctx.strokeStyle = lsUI.colors.fg.value || "#080";
 		ctx.fillStyle = form.pattern || lsUI.colors.bg.value || "#fff";
 		ls.init(params || this.collectParams()).draw(lsUI.canvas);
+		lsUI.exportLink.href = lsUI.canvas.toDataURL();
 	},
 
 	addPlotHandler: function () {
@@ -427,16 +429,19 @@ form = {
 
 	addExportHandler: function () {
 		var f = this;
-		dom.on("click", "#ls-export", function () {
-			var wnd = window.open("about:blank", "lsystempng", "width=550,height=550,menubar=yes,resizable=yes"),
-				doc = wnd.document;
-			doc.open();
-			doc.write(
-				"<!DOCTYPE html><html><head><meta charset='UTF-8'/><title>L-system</title></head><body>" +
-				"<img width='500' height='500' alt='' src='" + lsUI.canvas.toDataURL() + "'/></body></html>"
-			);
-			doc.close();
-		});
+		if (!("download" in document.createElement("a"))) {
+			dom.on("click", lsUI.exportLink, function (e) {
+				var wnd = window.open("about:blank", "lsystempng", "width=550,height=550,menubar=yes,resizable=yes"),
+					doc = wnd.document;
+				doc.open();
+				doc.write(
+					"<!DOCTYPE html><html><head><meta charset='UTF-8'/><title>L-system</title></head><body>" +
+						"<img width='500' height='500' alt='' src='" + e.target.href + "'/></body></html>"
+				);
+				doc.close();
+				e.preventDefault();
+			});
+		}
 		dom.on("click", "#ls-link-btn", function () {
 			var params = JSON.stringify(f.collectParams(true)),
 				field = dom.$("#ls-link-field");
