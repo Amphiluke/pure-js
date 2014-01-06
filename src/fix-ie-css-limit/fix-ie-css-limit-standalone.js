@@ -46,9 +46,14 @@
 	remain = Math.ceil(paths.length / importsPerStyle);
 	for (i = 0; i < len; i++) {
 		if (i < remain) {
-			sheet = links[i].styleSheet;
-			if (sheet && sheet.cssText != "") {
-				sheet.cssText = "";
+			try {
+				sheet = links[i].styleSheet;
+				if (sheet && sheet.cssText != "") {
+					sheet.cssText = "";
+				}
+			} catch (e) {
+				// exceptions may be rarely thrown, e.g. when a stylesheet uses
+				// non-typical referencing method (like data:uri)
 			}
 		} else {
 			links[i].parentNode.removeChild(links[i]);
