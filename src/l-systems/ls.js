@@ -3,6 +3,7 @@
  * ls.js (core and base logic implementation)
  *
  * https://github.com/Amphiluke/pure-js/blob/master/src/l-systems/ls.js
+ * http://amphiluke.github.io/pure-js/l-systems/ls.html
  *
  * Copyright (c) 2012-2014 Amphiluke
  *

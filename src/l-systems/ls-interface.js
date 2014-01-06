@@ -3,6 +3,7 @@
  * ls-interface.js (user interface)
  *
  * https://github.com/Amphiluke/pure-js/blob/master/src/l-systems/ls-interface.js
+ * http://amphiluke.github.io/pure-js/l-systems/ls.html
  *
  * Copyright (c) 2012-2014 Amphiluke
  *

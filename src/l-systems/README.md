@@ -23,4 +23,4 @@ One may group L-systems into custom collections and then store them in the persi
 
 ### Live demo
 
-[Here](http://diapeira.1gb.ru/projects/l-systems/ls.html), you may find a live demo.
+[Here](http://amphiluke.github.io/pure-js/l-systems/ls.html), you may find a live demo.

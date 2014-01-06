@@ -4,7 +4,7 @@
  * [standalone version: no jQuery required]
  *
  * https://github.com/Amphiluke/pure-js/tree/master/src/fix-ie-css-limit
- * http://diapeira.1gb.ru/diapeira/other/fix-ie-css-limit.html
+ * http://amphiluke.github.io/pure-js/fix-ie-css-limit/
  *
  * Attach the script in the HEAD section of the document after all the LINK tags
  */

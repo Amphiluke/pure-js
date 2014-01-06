@@ -76,4 +76,4 @@ When used as a jQuery plugin, the `fxPieChart` method may take a function as the
 
 ### Live demos
 
-You may find more examples and some demos of use the fx-pie-charts module [here](http://diapeira.1gb.ru/diapeira/pure-js/fx-pie-charts.html).
+You may find more examples and some demos of use the fx-pie-charts module [here](http://amphiluke.github.io/pure-js/fx-pie-charts/).
