@@ -1,5 +1,5 @@
 /*!
- * fx-pie-charts.js by Amphiluke, 2013-2014 (c)
+ * fx-pie-charts.js by Amphiluke, 2013-2015 (c)
  * JavaScript module for pie charts plotting
  *
  * https://github.com/Amphiluke/pure-js/tree/master/src/fx-pie-charts

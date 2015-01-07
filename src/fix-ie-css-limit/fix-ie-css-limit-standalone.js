@@ -1,5 +1,5 @@
 /*!
- * fix-ie-css-limit.js by Amphiluke, 2012-2014 (c)
+ * fix-ie-css-limit.js by Amphiluke, 2012-2015 (c)
  * Script to fix IE limitation on style sheet number (31 as a maximum)
  * [standalone version: no jQuery required]
  *
