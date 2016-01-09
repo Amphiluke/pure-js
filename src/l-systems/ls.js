@@ -5,7 +5,7 @@
  * https://github.com/Amphiluke/pure-js/blob/master/src/l-systems/ls.js
  * http://amphiluke.github.io/pure-js/l-systems/ls.html
  *
- * Copyright (c) 2012-2015 Amphiluke
+ * Copyright (c) 2012-2016 Amphiluke
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
