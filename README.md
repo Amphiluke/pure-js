@@ -2,6 +2,8 @@
 
 Modules and snippets in pure JavaScript
 
+:lock: **The project is archived and is no longer maintained**
+
 ### Repository project list
 
 1. #### [ls](https://github.com/Amphiluke/pure-js/tree/master/src/l-systems)
